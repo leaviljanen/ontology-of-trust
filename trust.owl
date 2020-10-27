@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+     <!ENTITY trust "http://www.cs.helsinki.fi/~viljanen/trust#" >
+     <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+     <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+   ]>
+
+<rdf:RDF
+  xmlns     = "http://www.cs.helsinki.fi/~viljanen/trust#"
+  xmlns:trust = "http://www.cs.helsinki.fi/~viljanen/trust#"
+  xml:base  = "http://www.cs.helsinki.fi/~viljanen/trust#"
+  xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  xmlns:rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs= "http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:xsd = "http://www.w3.org/2001/XMLSchema#">
+
+  <owl:Ontology rdf:about="">
+    <rdfs:comment>An OWL ontology about trust. Initial version</rdfs:comment>
+    </rdfs:comment>
+    <rdfs:label>Trust Ontology</rdfs:label>
+  </owl:Ontology>
+
+#
+# Or maybe trust is only a property?
+#
+
+  <owl:Class rdf:ID="Trust">
+    <rdfs:comment>This is an abstract thing, but Thing nonetheless</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Thing">
+
+    <rdfs:comment>Must have an entity as the object of trust</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasObject" />
+	<owl:allValuesFrom rdf:resource="#Subject" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+
+    <rdfs:comment>Must have exactly one object</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasObject" />
+        <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="en">trust</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Subject">
+    <rdfs:comment>People/computers/software...</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Thing">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasPublicKey" />
+        <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Context">
+  </owl:Class>
+
+  <owl:Class rdf:ID="Capability">
+  </owl:Class>
+
+  <owl:Class rdf:ID="Reputation">
+    <rdfs:comment>Some measurement of reputation</rdfs:comment>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Stake">
+    <rdfs:comment>Possibility of loss in numbers</rdfs:comment>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Benefit">
+    <rdfs:comment>Trust benefit in numbers</rdfs:comment>
+  </owl:Class>
+
+  <owl:DatatypeProperty rdf:ID="reputationValue">
+    <rdfs:domain rdf:resource="#Reputation" />
+    <rdfs:range  rdf:resource="&xsd;positiveInteger"/>
+  </owl:DatatypeProperty> 
+
+  <owl:DatatypeProperty rdf:ID="stakeValue">
+    <rdfs:domain rdf:resource="#Stake" />
+    <rdfs:range  rdf:resource="&xsd;positiveInteger"/>
+  </owl:DatatypeProperty> 
+
+  <owl:DatatypeProperty rdf:ID="benefitValue">
+    <rdfs:domain rdf:resource="#Benefit" />
+    <rdfs:range  rdf:resource="&xsd;positiveInteger"/>
+  </owl:DatatypeProperty> 
+
+  <owl:ObjectProperty rdf:ID="hasTrust">
+    <rdfs:comment>Hmmm...?</rdfs:comment>
+    <rdfs:domain rdf:resource="#Subject" />
+    <rdfs:range rdf:resource="#Trust" />
+  </owl:ObjectProperty>
+
+</rdf:RDF>
